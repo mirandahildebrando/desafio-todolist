@@ -21,9 +21,14 @@ class DesafioApplicationTests {
 			.bodyValue(todo)
 			.exchange()
 			.expectStatus().isOk()
-			.expectBodyList(Todo.class)
-			.hasSize(1)
-			.contains(todo);
+			.expectBody()
+			.jsonPath("$.name").isArray()
+			.jsonPath(".length()").isEqualTo(1)
+			.jsonPath("$.name[0]").isEqualTo(todo.getName)
+			.jsonPath("$.descricao[0]").isEqualTo(todo.getDescricao())
+			.jsonPath("$.realizado[0]").isEqualTo(todo.isRealizado())
+			.jsonPath("$.prioridade[0]").isEqualTo(todo.getPrioridade());
+
 	}
 
 	@Test
