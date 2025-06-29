@@ -6,7 +6,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.desafio_todolist.desafio.entity.Todo;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DesafioApplicationTests {
  
 	@Autowired
@@ -33,6 +33,16 @@ class DesafioApplicationTests {
 
 	@Test
 	void testCreateTodoFailure() {
+		webTestClient.post()
+			.uri("/todos")
+			.bodyValue(new Todo())
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectBody()
+			.jsonPath("$.name").isArray()
+			.jsonPath("$.descricao").isArray()
+			.jsonPath("$.realizado").isArray()
+			.jsonPath("$.prioridade").isArray();
 	}
 
 }

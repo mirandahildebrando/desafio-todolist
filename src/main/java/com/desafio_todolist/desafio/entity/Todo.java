@@ -5,20 +5,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-
-
+import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "todos")
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String descricao;
     private boolean realizado;
     private int prioridade;
-    public Object getName;
+    public String getName;
 
     
 
@@ -60,7 +60,7 @@ public class Todo {
         this.prioridade = prioridade;
     }
 
-
-    
-
+    public Todo() {
+        // Default constructor for JPA
+    }
 }
